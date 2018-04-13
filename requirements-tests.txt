@@ -1,0 +1,14 @@
+-r requirements.txt
+
+## CLI
+clinner
+
+## Tests
+coverage
+pytest
+pytest-cov
+prospector
+tox
+
+## Backends
+sqlalchemy
