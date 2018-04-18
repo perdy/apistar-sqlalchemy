@@ -1,7 +1,6 @@
 import logging
 
 from apistar import http
-from apistar.exceptions import HTTPException
 from sqlalchemy.orm import Session
 
 from apistar_sqlalchemy import database
