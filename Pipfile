@@ -1,0 +1,28 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+apistar = "*"
+SQLAlchemy = "*"
+
+
+[dev-packages]
+
+apistar = "*"
+clinner = "*"
+coverage = "*"
+pytest = "*"
+pytest-cov = "*"
+prospector = "*"
+SQLAlchemy = "*"
+tox = "*"
+
+
+[requires]
+
+python_version = "3.6"

@@ -1,3 +1,0 @@
-apistar
-aiohttp
-sqlalchemy
