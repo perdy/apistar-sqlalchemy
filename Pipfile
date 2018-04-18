@@ -7,13 +7,13 @@ name = "pypi"
 
 [packages]
 
-apistar = "*"
+apistar = ">=0.5"
 SQLAlchemy = "*"
 
 
 [dev-packages]
 
-apistar = "*"
+apistar = ">=0.5"
 clinner = "*"
 coverage = "*"
 pytest = "*"

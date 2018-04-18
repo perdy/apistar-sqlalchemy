@@ -25,7 +25,10 @@ def list_puppies(session: Session) -> List[PuppyType]:
     return [PuppyType(puppy) for puppy in session.query(PuppyModel).all()]
 
 
-def create_puppy(session: Session, puppy: PuppyType) -> http.JSONResponse:
+def create_puppy(session: Session, puppy: PuppyType, raise_exception: http.QueryParam) -> http.JSONResponse:
+    if raise_exception:
+        raise Exception
+
     model = PuppyModel(**puppy)
     session.add(model)
     session.flush()
@@ -69,10 +72,21 @@ class TestCaseEndToEnd:
         assert response.status_code == 200
         assert response.json() == [created_puppy]
 
-    def test_insert_and_select_fail(self, client):
+    def test_insert_and_select_handled_exception(self, client):
         # Failed to create a new record
         response = client.post('/puppy/', json={})
         assert response.status_code == 400
+
+        # List all the existing records
+        response = client.get('/puppy/')
+        assert response.status_code == 200
+        assert response.json() == []
+
+    def test_insert_and_select_unhandled_exception(self, client, puppy):
+        with pytest.raises(Exception):
+            # Failed to create a new record
+            response = client.post('/puppy/?raise_exception=true', json=puppy)
+            assert response.status_code == 500
 
         # List all the existing records
         response = client.get('/puppy/')
