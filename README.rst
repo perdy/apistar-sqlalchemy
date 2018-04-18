@@ -21,15 +21,22 @@ Install API Star SQLAlchemy:
 
     pip install apistar-sqlalchemy
 
-Add your database url to a environment variable named `SQLALCHEMY_URL` and create an API Star application adding
-components and event hooks:
+Create an API Star application adding components and event hooks:
 
 .. code:: python
 
-    from apistar_sqlalchemy.components import components
-    from apistar_sqlalchemy.event_hooks import event_hooks
+    from apistar_sqlalchemy.components import SQLAlchemySessionComponent
+    from apistar_sqlalchemy.event_hooks import SQLAlchemyTransactionHook
 
     routes = []
+
+    components = [
+        SQLAlchemySessionComponent(url='sqlite://'),
+    ]
+
+    event_hooks = [
+        SQLAlchemyTransactionHook(),
+    ]
 
     app = App(routes=routes, components=components, event_hooks=event_hooks)
 
@@ -54,8 +61,8 @@ Full example
     from sqlalchemy import Column, Integer, String
     from sqlalchemy.orm import Session
 
-    from apistar_sqlalchemy.components import components
-    from apistar_sqlalchemy.event_hooks import event_hooks
+    from apistar_sqlalchemy.components import SQLAlchemySessionComponent
+    from apistar_sqlalchemy.event_hooks import SQLAlchemyTransactionHook
     from apistar_sqlalchemy import database
 
 
@@ -86,6 +93,14 @@ Full example
         Route('/puppy/', 'GET', list_puppies),
     ]
 
+    components = [
+        SQLAlchemySessionComponent(url='sqlite://'),
+    ]
+
+    event_hooks = [
+        SQLAlchemyTransactionHook(),
+    ]
+    
     app = App(routes=routes, components=components, event_hooks=event_hooks)
 
 
