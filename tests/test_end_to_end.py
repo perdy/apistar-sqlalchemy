@@ -1,4 +1,3 @@
-import os
 from typing import List
 
 import pytest
@@ -6,12 +5,9 @@ from apistar import ASyncApp, App, Route, TestClient, http, types, validators
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import Session
 
-os.environ.setdefault('SQLALCHEMY_URL', 'sqlite://')
-
-# Import components and hooks based on previous url
-from apistar_sqlalchemy.components import components
-from apistar_sqlalchemy.event_hooks import event_hooks
 from apistar_sqlalchemy import database
+from apistar_sqlalchemy.components import SQLAlchemySessionComponent
+from apistar_sqlalchemy.event_hooks import SQLAlchemyTransactionHook
 
 
 class PuppyModel(database.Base):
@@ -40,6 +36,9 @@ routes = [
     Route('/puppy/', 'POST', create_puppy),
     Route('/puppy/', 'GET', list_puppies),
 ]
+
+components = [SQLAlchemySessionComponent(url='sqlite://')]
+event_hooks = [SQLAlchemyTransactionHook()]
 
 app = App(routes=routes, components=components, event_hooks=event_hooks)
 async_app = ASyncApp(routes=routes, components=components, event_hooks=event_hooks)

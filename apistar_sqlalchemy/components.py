@@ -1,25 +1,19 @@
 from apistar import Component
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 
 from apistar_sqlalchemy import database
 
 
 class SQLAlchemySessionComponent(Component):
-    def __init__(self) -> None:
+    def __init__(self, url: str) -> None:
         """
         Configure a new database backend.
 
-        Args:
-          settings: The application settings dictionary.
+        :param url: SQLAlchemy database url.
         """
-        self.metadata = database.Base.metadata
-        self.engine = database.get_engine()
-        self.Session = sessionmaker(bind=self.engine)
+        self.engine = create_engine(url)
+        database.Session.configure(bind=self.engine)
 
     def resolve(self) -> Session:
-        return self.Session()
-
-
-components = [
-    SQLAlchemySessionComponent(),
-]
+        return database.Session()
