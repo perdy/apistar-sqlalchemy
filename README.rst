@@ -57,6 +57,8 @@ Full example
 
 .. code:: python
 
+    from typing import List
+
     from apistar import App, Route, http, types, validators
     from sqlalchemy import Column, Integer, String
     from sqlalchemy.orm import Session
