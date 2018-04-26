@@ -2,7 +2,7 @@ API Star SQLAlchemy
 ===================
 |build-status| |coverage| |version|
 
-:Version: 0.3.0
+:Version: 0.3.1
 :Status: Production/Stable
 :Author: José Antonio Perdiguero López
 
