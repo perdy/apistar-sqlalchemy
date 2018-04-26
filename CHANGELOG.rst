@@ -1,5 +1,8 @@
 Changes
 =======
+v0.3.1 - 2018-04-26
+ * Add long description for PyPI project description.
+
 v0.3.0 - 2018-04-18
  * Upgrade to make it compatible with API Star v0.5 and its new way of handle exceptions in event hooks.
 

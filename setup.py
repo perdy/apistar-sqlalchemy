@@ -28,8 +28,7 @@ def get_packages(package):
 
 def get_package_data(package):
     """
-    Return all files under the root package, that are not in a
-    package themselves.
+    Return all files under the root package, that are not in a package themselves.
     """
     walk = [(dirpath.replace(package + os.sep, '', 1), filenames)
             for dirpath, dirnames, filenames in os.walk(package)
@@ -42,6 +41,16 @@ def get_package_data(package):
     return {package: filepaths}
 
 
+def get_long_description(long_description_file):
+    """
+    Read long description from file.
+    """
+    with open(long_description_file) as f:
+        long_description = f.read()
+
+    return long_description
+
+
 name = 'apistar-sqlalchemy'
 package_name = 'apistar_sqlalchemy'
 version = get_version(package_name)
@@ -50,6 +59,7 @@ setup(
     name=name,
     version=version,
     description='SQLAlchemy integration for API Star.',
+    long_description=get_long_description('README.rst'),
     author='José Antonio Perdiguero López',
     author_email='perdy.hh@gmail.com',
     maintainer='José Antonio Perdiguero López',
