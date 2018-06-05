@@ -10,13 +10,13 @@ logger = logging.getLogger(__name__)
 
 
 class SQLAlchemySessionComponent(Component):
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str, **kwargs) -> None:
         """
         Configure a new database backend.
 
         :param url: SQLAlchemy database url.
         """
-        self.engine = create_engine(url)
+        self.engine = create_engine(url, **kwargs)
         database.Session.configure(bind=self.engine)
         logger.info('SQLAlchemy connection created')
         logger.debug('Engine connection to %s', url)
