@@ -2,18 +2,13 @@ from typing import List
 
 import pytest
 from apistar import ASyncApp, App, Route, TestClient, http, types, validators
-from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import Session
 
 from apistar_sqlalchemy import database
 from apistar_sqlalchemy.components import SQLAlchemySessionComponent
 from apistar_sqlalchemy.event_hooks import SQLAlchemyTransactionHook
 
-
-class PuppyModel(database.Base):
-    __tablename__ = "Puppy"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
+from .models import PuppyModel
 
 
 class PuppyType(types.Type):

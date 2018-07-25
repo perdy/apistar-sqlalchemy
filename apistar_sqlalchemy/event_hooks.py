@@ -9,22 +9,37 @@ logger = logging.getLogger(__name__)
 
 
 class SQLAlchemyTransactionHook:
-    def on_response(self, response: http.Response, session: Session, exc: Exception) -> http.Response:
-        if exc is None:
-            session.commit()
-            logger.debug('Commit')
-            self.remove_session()
+
+    def __init__(self, nested=False):
+        self.nested = nested
+        self.txn = None
+
+    def on_request(self, session: Session):
+        if self.nested:
+            self.txn = session.begin_nested()
         else:
-            session.rollback()
+            self.txn = session
+
+    def on_response(self, response: http.Response, exc: Exception) -> http.Response:
+        if exc is None:
+            self.txn.commit()
+            logger.debug('Commit')
+        else:
+            self.txn.rollback()
             logger.debug('Rollback')
+
+        if not self.nested:
             self.remove_session()
 
         return response
 
-    def on_error(self, response: http.Response, session: Session) -> http.Response:
-        session.rollback()
+    def on_error(self, response: http.Response) -> http.Response:
+        self.txn.rollback()
         logger.debug('Rollback')
-        self.remove_session()
+
+        if not self.nested:
+            self.remove_session()
+
         return response
 
     def remove_session(self):
