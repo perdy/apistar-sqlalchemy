@@ -70,6 +70,7 @@ setup(
     package_data=get_package_data(package_name),
     install_requires=[
         'apistar',
+        'SQLAlchemy',
     ],
     tests_require=[
         'apistar',

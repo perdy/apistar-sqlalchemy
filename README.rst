@@ -102,7 +102,7 @@ Full example
     event_hooks = [
         SQLAlchemyTransactionHook(),
     ]
-    
+
     app = App(routes=routes, components=components, event_hooks=event_hooks)
 
 

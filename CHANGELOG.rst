@@ -1,5 +1,8 @@
 Changes
 =======
+v0.3.2 - 2018-07-25
+ * SQLAlchemy listed as a requirement.
+
 v0.3.1 - 2018-04-26
  * Add long description for PyPI project description.
 
